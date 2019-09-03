@@ -64,6 +64,27 @@ export GOPATH=$GOPATH
 export PATH=\$PATH:$GOROOT/bin:$GOPATH/bin
 EOF
 
+# Installing Rocks DB, g++ compilers & Dependencies
+#sudo apt-get install build-essential -y
+#sudo apt-get install -y libsnappy-dev zlib1g-dev libbz2-dev
+#cd /tmp
+#git clone --branch v6.0.2 --single-branch --depth 1 https://github.com/facebook/rocksdb.git
+#cd rocksdb
+#make static_lib
+#make shared_lib
+#cp librocksdb.a /usr/lib
+#cp librocksdb.so /usr/lib
+#cp -r /tmp/rocksdb/include/rocksdb /usr/include
+#sudo ldconfig
+
+# Installing Rocks DB & Dependencies
+ROCKSDB_VERSION=v6.0.2
+apt-get install -y build-essential checkinstall libgflags-dev libsnappy-dev zlib1g-dev libbz2-dev
+cd /tmp
+git clone --depth 1 --branch ${ROCKSDB_VERSION} https://github.com/facebook/rocksdb.git && cd rocksdb && make clean && PORTABLE=1 make install-static INSTALL_PATH=/usr
+cp -r /tmp/rocksdb/include/rocksdb /usr/include
+sudo ldconfig
+
 # ----------------------------------------------------------------
 # Install NodeJS
 # ----------------------------------------------------------------
